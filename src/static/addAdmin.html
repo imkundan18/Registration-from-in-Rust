@@ -14,9 +14,13 @@
         <input type="email" id="email" name="email" required><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
+        <label for="admin">Admin:</label>
+        <input type="checkbox" id="admin" name="admin" value="true">
         <button type="submit">Register</button>
     </form>
 
+    <br>
+    <a href="updateAdmin.html">Update User Password</a>
     
     <script>
         document.getElementById('registerForm').addEventListener('submit', async (event) => {
@@ -24,18 +28,19 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const admin = document.getElementById('admin').checked;
 
-            const response = await fetch('/user', {
+            const response = await fetch('/admin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, email, password })
+                body: JSON.stringify({ name, email, password,admin })
             });
 
             const result = await response.json();
             
-            window.location.href = 'user_login.html';
+            window.location.href = 'admin_page.html';
         });
     </script>
 </body>

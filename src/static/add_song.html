@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+</head>
+<body>
+    <h1>Add Song</h1>
+    <form id="addSong">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="link">Song:</label>
+        <input type="text" id="link" name="link" required><br>
+        
+        <button type="submit">Add</button>
+    </form>
+
+    
+    <script>
+        document.getElementById('addSong').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const link = document.getElementById('link').value;
+
+            const response = await fetch('/add_song', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, link})
+            });
+
+            const result = await response.json();
+            
+            window.location.href = 'add_song.html';
+        });
+    </script>
+</body>
+</html>

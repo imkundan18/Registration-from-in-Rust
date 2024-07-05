@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+    <h1>List</h1>
+    
+    <table id="todo-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Song</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchTodos() {
+            const response = await fetch('/get_data');
+            const todos = await response.json();
+            const todoTableBody = document.querySelector('#todo-table tbody');
+
+            todos.forEach(todo => {
+                const tr = document.createElement('tr');
+                const nameTd = document.createElement('td');
+                const linkTd = document.createElement('td');
+                
+
+                nameTd.textContent = todo.name;
+                //linkTd.textContent = todo.link;
+                
+                const audio = document.createElement('audio');
+                audio.controls = true;
+                audio.src = todo.link;
+                linkTd.appendChild(audio);
+                
+
+                tr.appendChild(nameTd);
+                tr.appendChild(linkTd);
+                todoTableBody.appendChild(tr);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchTodos);
+    </script>
+</body>
+</html>

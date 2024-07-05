@@ -4,7 +4,8 @@ pub mod model;
 pub mod controller;
 use db::mongo_db::MongoDb;
 use rocket::fs::FileServer;
-use crate::controller::user_controller::{create,fetch,login};
+use crate::controller::user_controller::{create_admin,create_user,user_login,admin_login,update_p};
+use crate::controller::song_controller::{get_data,add_song,delete_song};
 
 
 // #[launch]
@@ -23,7 +24,9 @@ async fn main()->Result<(),rocket::Error>{
 
     let _=rocket::custom(config).manage(db)
     .mount("/", FileServer::from("src/static"))
-    .mount("/", routes![create,fetch,login])
+    .mount("/", routes![create_user,create_admin,
+                        user_login,admin_login,update_p,
+                            get_data,add_song,delete_song])
     .launch()
     .await?;
 
